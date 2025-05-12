@@ -1,10 +1,8 @@
 provider "google" {
-  project = "saicharan-457910"        # ← your GCP project ID
-  region  = "us-west1"          # optional, for regional resources
-  zone    = "us-west1-a"        # for zonal resources like compute instances
+  project = "saicharan-457910"  # ✅ Your GCP project ID
+  region  = "us-west1"
+  zone    = "us-west1-a"
 }
-
-
 
 resource "tls_private_key" "my_ssh_key" {
   algorithm = "RSA"
@@ -14,11 +12,11 @@ resource "tls_private_key" "my_ssh_key" {
 resource "google_compute_instance" "instance" {
   name         = "instance-1"
   machine_type = "e2-standard-2"
-  zone = "us-west1-a"
+  zone         = "us-west1-a"
 
   boot_disk {
     initialize_params {
-      image = "centos-stream-9"
+      image = "centos-stream-9"  # ✅ This is valid in most GCP regions; use `centos-7` if needed
     }
   }
 
@@ -30,13 +28,15 @@ resource "google_compute_instance" "instance" {
   metadata = {
     ssh-keys = "ansible:${tls_private_key.my_ssh_key.public_key_openssh}"
   }
+
+  tags = ["harness-ansible"]
 }
 
 output "private_key" {
   value     = tls_private_key.my_ssh_key.private_key_pem
   sensitive = true
 }
+
 output "vm_external_ip" {
-   
   value = google_compute_instance.instance.network_interface[0].access_config[0].nat_ip
 }
