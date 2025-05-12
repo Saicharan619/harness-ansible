@@ -45,9 +45,10 @@
         -e MANAGER_HOST_AND_PORT=https://app.harness.io us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.04.85701
     - name: Install and run Harness Docker Runner
       shell: |
-        curl -L https://github.com/harness/harness-docker-runner/releases/download/v0.1.18/drone-docker-runner-linux-amd64 -o /root/harness-docker-runner-linux-amd64
-        chmod +x /root/harness-docker-runner-linux-amd64
-        /root/harness-docker-runner-linux-amd64 server
+        curl -L https://github.com/harness/harness-docker-runner/releases/download/v0.1.18/drone-docker-runner-linux-amd64 -o /root/harness-docker-runner
+        chmod +x /root/harness-docker-runner
+        nohup /root/harness-docker-runner server > /root/runner.log 2>&1 &
+
 
 
         
