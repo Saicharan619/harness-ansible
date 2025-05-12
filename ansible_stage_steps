@@ -17,7 +17,7 @@ check the ssh connection and  run the playbook
 
 
 #!/bin/bash
-set -euo pipefail
+set -e
 
 # Display Ansible version
 ansible --version
