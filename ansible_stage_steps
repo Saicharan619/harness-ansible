@@ -17,15 +17,15 @@ check the ssh connection and  run the playbook
 
 
 #!/bin/bash
-set -e
+set -euo pipefail
 
 # Display Ansible version
 ansible --version
 
 # Define required variables
 VM_USER="ansible"
-VM_IP="<+workspace.IACM2ganesh.vm_external_ip>"         # Harness will replace this
-PRIVATE_KEY_CONTENT="<+workspace.IACM2ganesh.private_key>"  # Injected multiline key
+VM_IP="<+workspace.IACMansibledelegatecharan.vm_external_ip>"         # Harness will replace this
+PRIVATE_KEY_CONTENT="<+workspace.IACMansibledelegatecharan.private_key>"  # Injected multiline key
 
 # Temporary working directory for Ansible setup
 WORKDIR="$PWD/private"
@@ -36,17 +36,17 @@ ANSIBLE_CFG="$WORKDIR/ansible.cfg"
 mkdir -p "$WORKDIR"
 
 # Save the private key securely
-cat <<EOF > "$PRIVATE_KEY_PATH"
-$PRIVATE_KEY_CONTENT
-EOF
-
+echo "$PRIVATE_KEY_CONTENT" > "$PRIVATE_KEY_PATH"
 chmod 600 "$PRIVATE_KEY_PATH"
-echo "Private key saved to $PRIVATE_KEY_PATH"
+echo "✅ Private key saved to $PRIVATE_KEY_PATH"
 
 # Create minimal Ansible inventory
-echo "[target]" > "$INVENTORY_FILE"
-echo "$VM_IP" >> "$INVENTORY_FILE"
-echo "Inventory created:"
+cat <<EOF > "$INVENTORY_FILE"
+[target]
+$VM_IP
+EOF
+
+echo "✅ Inventory created:"
 cat "$INVENTORY_FILE"
 
 # Create Ansible config
@@ -63,12 +63,11 @@ EOF
 export ANSIBLE_CONFIG="$ANSIBLE_CFG"
 
 # Test connection
-echo "Testing Ansible connection with ping module..."
+echo "🔄 Testing Ansible connection with ping module..."
 ansible all -m ping
 
-
-
+# Clone repo and run playbook
+echo "⬇️ Cloning Ansible repo and running playbook..."
 git clone https://github.com/ganesh-redy/harness-ansible.git
 cd harness-ansible
-ls 
-ansible-playbook -i "$INVENTORY_FILE" --private-key "$PRIVATE_KEY_PATH" -u "$VM_USER" delegate.yaml
+ansible-playbook delegate.yaml
