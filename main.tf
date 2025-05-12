@@ -1,5 +1,5 @@
 provider "google" {
-  project = "sam-458313"        # ← your GCP project ID
+  project = "saicharan-457910"        # ← your GCP project ID
   region  = "us-west1"          # optional, for regional resources
   zone    = "us-west1-a"        # for zonal resources like compute instances
 }
