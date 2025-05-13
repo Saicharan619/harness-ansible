@@ -23,7 +23,7 @@ set -e
 ansible --version
 
 # Define required variables
-VM_USER="ansible"
+VM_USER="centos"
 VM_IP="<+workspace.IACMansibledelegatecharan.vm_external_ip>"         # Harness will replace this
 PRIVATE_KEY_CONTENT="<+workspace.IACMansibledelegatecharan.private_key>"  # Injected multiline key
 
