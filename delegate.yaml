@@ -48,15 +48,15 @@
     - name: Install Harness Delegate (Docker-based)
       shell: |
         docker run -d --name docker-delegate-charan \
-          --cpus=1 --memory=2g --network=host \
-          -e DELEGATE_NAME=docker-delegate-charan \
-          -e NEXT_GEN="true" \
-          -e DELEGATE_TYPE="DOCKER" \
-          -e ACCOUNT_ID=ucHySz2jQKKWQweZdXyCog \
-          -e DELEGATE_TOKEN=NTRhYTY0Mjg3NThkNjBiNjMzNzhjOGQyNjEwOTQyZjY= \
-          -e DELEGATE_TAGS="linux-amd64" \
-          -e MANAGER_HOST_AND_PORT=https://app.harness.io \
-          us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.04.85701
+        --cpus=1 --memory=2g --network=host \
+        -e DELEGATE_NAME=docker-ansible-charan-2 \
+        -e NEXT_GEN="true" \
+        -e DELEGATE_TYPE="DOCKER" \
+        -e ACCOUNT_ID=ucHySz2jQKKWQweZdXyCog \
+        -e DELEGATE_TOKEN=NDRjMTA2YjNiNmE5MzdiMTM2MTExMGIzMGZhMDM0ZWI= \
+        -e DELEGATE_TAGS="linux-amd64" \
+        -e MANAGER_HOST_AND_PORT=https://app.harness.io \
+        us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.04.85701
 
     - name: Wait for delegate container to become healthy
       shell: |
